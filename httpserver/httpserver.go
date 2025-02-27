@@ -3,6 +3,7 @@ package httpserver
 import (
 	"context"
 	"crypto/tls"
+	"encoding/json"
 	"fmt"
 	"net"
 	"net/http"
@@ -12,6 +13,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	cetuspoolssystem "github.com/ipoluianov/cetuspools/system"
 	"github.com/ipoluianov/cetuspoolsui/repo"
 	"github.com/ipoluianov/gomisc/logger"
 )
@@ -61,7 +63,7 @@ func (c *HttpServer) thListenTLS() {
 	c.rTLS = mux.NewRouter()
 
 	c.rTLS.HandleFunc("/data/{id}", c.processData)
-	c.rTLS.HandleFunc("/price/{id}", c.processPrice)
+	c.rTLS.HandleFunc("/pool/{id}", c.processPool)
 
 	c.rTLS.NotFoundHandler = http.HandlerFunc(c.processFile)
 	c.srvTLS.Handler = c
@@ -136,7 +138,7 @@ func (c *HttpServer) processData(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(v))
 }
 
-func (c *HttpServer) processPrice(w http.ResponseWriter, r *http.Request) {
+func (c *HttpServer) processPool(w http.ResponseWriter, r *http.Request) {
 	realIP := getRealAddr(r)
 	logger.Println("processFile", realIP, r.URL.Path)
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -154,9 +156,45 @@ func (c *HttpServer) processPrice(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	poolSymbol := parts[1]
+
 	v := repo.Get().Get("items")
 
-	w.Write([]byte(v))
+	var lastData cetuspoolssystem.CetusStatsPools
+	err := json.Unmarshal([]byte(v), &lastData)
+	if err != nil {
+		logger.Println("processPool", "json.Unmarshal error", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+
+	}
+
+	type Res struct {
+		TVL      string `json:"tvl"`
+		Volume   string `json:"volume"`
+		TotalApr string `json:"totalApr"`
+		Price    string `json:"price"`
+	}
+
+	for _, pool := range lastData.Data.LpList {
+		if pool.Symbol == poolSymbol {
+			var res Res
+			res.TVL = pool.PureTvlInUsd
+			res.Volume = pool.VolInUsd24H
+			res.TotalApr = pool.TotalApr
+			res.Price = pool.Price
+			v, err := json.Marshal(res)
+			if err != nil {
+				logger.Println("processPool", "json.Marshal error", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+			w.Write(v)
+			return
+		}
+	}
+
+	w.WriteHeader(http.StatusNotFound)
 }
 
 func (c *HttpServer) processFile(w http.ResponseWriter, r *http.Request) {
