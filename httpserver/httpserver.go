@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 
@@ -174,6 +175,7 @@ func (c *HttpServer) processPool(w http.ResponseWriter, r *http.Request) {
 		Volume   string `json:"volume"`
 		TotalApr string `json:"totalApr"`
 		Price    string `json:"price"`
+		PriceRev string `json:"price_rev"`
 	}
 
 	for _, pool := range lastData.Data.LpList {
@@ -182,7 +184,16 @@ func (c *HttpServer) processPool(w http.ResponseWriter, r *http.Request) {
 			res.TVL = pool.PureTvlInUsd
 			res.Volume = pool.VolInUsd24H
 			res.TotalApr = pool.TotalApr
-			res.Price = pool.Price
+
+			price, _ := strconv.ParseFloat(pool.Price, 64)
+			res.Price = fmt.Sprintf("%.6f", price)
+			if price > 0 {
+				priceRev := 1 / price
+				res.PriceRev = fmt.Sprintf("%.6f", priceRev)
+			} else {
+				res.PriceRev = "0"
+			}
+
 			v, err := json.Marshal(res)
 			if err != nil {
 				logger.Println("processPool", "json.Marshal error", err)
