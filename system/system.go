@@ -140,6 +140,16 @@ func (c *System) ThWork() {
 		}
 
 		res := "<html><body><table>"
+		res += "<tr>"
+		res += "<td>Logo</td>"
+		res += "<td>Coin A</td>"
+		res += "<td>Logo</td>"
+		res += "<td>Coin B</td>"
+		res += "<td>Price</td>"
+		res += "<td>Price Rev</td>"
+		res += "<td>Pure TVL</td>"
+		res += "<td>Vol 24H</td>"
+		res += "</tr>"
 
 		for _, pool := range c.lastData.Data.LpList {
 			//res += pool.Name + " " + pool.CoinA.Symbol + " " + pool.CoinB.Symbol + " " + pool.Price + "\n"
@@ -158,7 +168,16 @@ func (c *System) ThWork() {
 
 			priceRevStr := strconv.FormatFloat(priceRev, 'f', 6, 64)
 
-			res += "<tr><td><image style='width: 32px; height: 32px' src='" + pool.CoinA.LogoUrl + "'></td><td>" + pool.CoinA.Symbol + "</td><td><image style='width: 32px; height: 32px' src='" + pool.CoinB.LogoUrl + "'></td><td>" + pool.CoinB.Symbol + "</td><td>" + priceStr + "</td><td>" + priceRevStr + "</td></tr>"
+			res += "<tr>"
+			res += "<td><image style='width: 32px; height: 32px' src='" + pool.CoinA.LogoUrl + "'></td>"
+			res += "<td>" + pool.CoinA.Symbol + "</td>"
+			res += "<td><image style='width: 32px; height: 32px' src='" + pool.CoinB.LogoUrl + "'></td>"
+			res += "<td>" + pool.CoinB.Symbol + "</td>"
+			res += "<td>" + priceStr + "</td>"
+			res += "<td>" + priceRevStr + "</td>"
+			res += "<td>" + pool.PureTvlInUsd + "</td>"
+			res += "<td>" + pool.VolInUsd24H + "</td>"
+			res += "</tr>"
 		}
 
 		res += "</table></body></html>"
