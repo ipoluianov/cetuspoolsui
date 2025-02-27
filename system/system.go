@@ -197,6 +197,7 @@ func (c *System) ThWork() {
 		res += "</table></body></html>"
 
 		repo.Get().Add("items", res)
+		repo.Get().Add("lastData", string(jsonData))
 
 		//logger.Println("items:", c.lastData)
 	}

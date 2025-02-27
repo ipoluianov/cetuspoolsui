@@ -158,7 +158,7 @@ func (c *HttpServer) processPool(w http.ResponseWriter, r *http.Request) {
 
 	poolSymbol := parts[1]
 
-	v := repo.Get().Get("items")
+	v := repo.Get().Get("lastData")
 
 	var lastData cetuspoolssystem.CetusStatsPools
 	err := json.Unmarshal([]byte(v), &lastData)
