@@ -186,8 +186,6 @@ func (c *HttpServer) processPool(w http.ResponseWriter, r *http.Request) {
 			totalApr *= 100
 			res.TotalApr = fmt.Sprintf("%.0f", totalApr)
 
-			res.TotalApr = pool.TotalApr
-
 			tvl, _ := strconv.ParseFloat(pool.PureTvlInUsd, 64)
 			tvlStr := fmt.Sprintf("%.0f", tvl)
 			volume, _ := strconv.ParseFloat(pool.VolInUsd24H, 64)
