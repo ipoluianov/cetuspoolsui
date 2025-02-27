@@ -149,6 +149,7 @@ func (c *System) ThWork() {
 		res += "<td>Price Rev</td>"
 		res += "<td>Pure TVL</td>"
 		res += "<td>Vol 24H</td>"
+		res += "<td>Total APR</td>"
 		res += "</tr>"
 
 		for _, pool := range c.lastData.Data.LpList {
@@ -177,6 +178,7 @@ func (c *System) ThWork() {
 			res += "<td>" + priceRevStr + "</td>"
 			res += "<td>" + pool.PureTvlInUsd + "</td>"
 			res += "<td>" + pool.VolInUsd24H + "</td>"
+			res += "<td>" + pool.TotalApr + "</td>"
 			res += "</tr>"
 		}
 
