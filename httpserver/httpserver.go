@@ -33,7 +33,7 @@ func CurrentExePath() string {
 
 func NewHttpServer() *HttpServer {
 	var c HttpServer
-	c.port = 8488
+	c.port = 8501
 	return &c
 }
 
