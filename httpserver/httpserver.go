@@ -61,6 +61,7 @@ func (c *HttpServer) thListenTLS() {
 	c.rTLS = mux.NewRouter()
 
 	c.rTLS.HandleFunc("/data/{id}", c.processData)
+	c.rTLS.HandleFunc("/price/{id}", c.processPrice)
 
 	c.rTLS.NotFoundHandler = http.HandlerFunc(c.processFile)
 	c.srvTLS.Handler = c
@@ -132,6 +133,29 @@ func (c *HttpServer) processData(w http.ResponseWriter, r *http.Request) {
 	}
 
 	v := repo.Get().Get(parts[1])
+	w.Write([]byte(v))
+}
+
+func (c *HttpServer) processPrice(w http.ResponseWriter, r *http.Request) {
+	realIP := getRealAddr(r)
+	logger.Println("processFile", realIP, r.URL.Path)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	if r.Method == "OPTIONS" {
+		w.Header().Set("Access-Control-Request-Method", "GET")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		return
+	}
+	parts := strings.FieldsFunc(r.URL.Path, func(r rune) bool {
+		return r == '/'
+	})
+	if len(parts) < 2 {
+		logger.Println("processData", "Invalid path")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	v := repo.Get().Get("items")
+
 	w.Write([]byte(v))
 }
 
