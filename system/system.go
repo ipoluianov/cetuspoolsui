@@ -175,6 +175,12 @@ func (c *System) ThWork() {
 			}
 			aprStr := strconv.FormatFloat(apr*100, 'f', 0, 64)
 
+			tvl, _ := strconv.ParseFloat(pool.PureTvlInUsd, 64)
+			tvlStr := strconv.FormatFloat(tvl, 'f', 0, 64)
+
+			vol, _ := strconv.ParseFloat(pool.VolInUsd24H, 64)
+			volStr := strconv.FormatFloat(vol, 'f', 0, 64)
+
 			res += "<tr>"
 			res += "<td><image style='width: 32px; height: 32px' src='" + pool.CoinA.LogoUrl + "'></td>"
 			res += "<td>" + pool.CoinA.Symbol + "</td>"
@@ -182,8 +188,8 @@ func (c *System) ThWork() {
 			res += "<td>" + pool.CoinB.Symbol + "</td>"
 			res += "<td>" + priceStr + "</td>"
 			res += "<td>" + priceRevStr + "</td>"
-			res += "<td>" + pool.PureTvlInUsd + "</td>"
-			res += "<td>" + pool.VolInUsd24H + "</td>"
+			res += "<td>" + tvlStr + "</td>"
+			res += "<td>" + volStr + "</td>"
 			res += "<td>" + aprStr + "</td>"
 			res += "</tr>"
 		}
