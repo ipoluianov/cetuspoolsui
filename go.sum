@@ -1,0 +1,13 @@
+github.com/gorilla/mux v1.8.1 h1:TuBL49tXwgrFYWhqrNgrUNEY92u81SPhu7sTdzQEiWY=
+github.com/gorilla/mux v1.8.1/go.mod h1:AKf9I4AEqPTmMytcMc0KkNouC66V3BtZ4qD5fmWSiMQ=
+github.com/ipoluianov/cetuspools v0.0.0-20250227102847-22e8f379d2de h1:phCsfUG0OeYxL7pO9RRGfQnafvo+HpJWxgT1rV5G0u8=
+github.com/ipoluianov/cetuspools v0.0.0-20250227102847-22e8f379d2de/go.mod h1:nBXoJYvcv8g/clisjRtsV66BmHPcETd/GINQpOszcLE=
+github.com/ipoluianov/gomisc v0.0.20 h1:TBD+YsSnDtGKXWk9ZjNOjLcAxXWrr54THwQPtWIN+PE=
+github.com/ipoluianov/gomisc v0.0.20/go.mod h1:3rlYbwz/L3LSguP2M+Png08EAWoXFxPXJ65uLhweiiU=
+github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0 h1:iQTw/8FWTuc7uiaSepXwyf3o52HaUYcV+Tu66S3F5GA=
+github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0/go.mod h1:1NbS8ALrpOvjt0rHPNLyCIeMtbizbir8U//inJ+zuB8=
+github.com/kardianos/service v1.2.2 h1:ZvePhAHfvo0A7Mftk/tEzqEZ7Q4lgnR8sGz4xu1YX60=
+github.com/kardianos/service v1.2.2/go.mod h1:CIMRFEJVL+0DS1a3Nx06NaMn4Dz63Ng6O7dl0qH0zVM=
+golang.org/x/sys v0.0.0-20201015000850-e3ed0017c211/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.6.0 h1:MVltZSvRTcU2ljQOhs94SXPftV6DCNnZViHeQps87pQ=
+golang.org/x/sys v0.6.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
