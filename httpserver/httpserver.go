@@ -181,9 +181,20 @@ func (c *HttpServer) processPool(w http.ResponseWriter, r *http.Request) {
 	for _, pool := range lastData.Data.LpList {
 		if pool.Symbol == poolSymbol {
 			var res Res
-			res.TVL = pool.PureTvlInUsd
-			res.Volume = pool.VolInUsd24H
+
+			totalApr, _ := strconv.ParseFloat(pool.TotalApr, 64)
+			totalApr *= 100
+			res.TotalApr = fmt.Sprintf("%.0f", totalApr)
+
 			res.TotalApr = pool.TotalApr
+
+			tvl, _ := strconv.ParseFloat(pool.PureTvlInUsd, 64)
+			tvlStr := fmt.Sprintf("%.0f", tvl)
+			volume, _ := strconv.ParseFloat(pool.VolInUsd24H, 64)
+			volumeStr := fmt.Sprintf("%.0f", volume)
+
+			res.TVL = tvlStr
+			res.Volume = volumeStr
 
 			price, _ := strconv.ParseFloat(pool.Price, 64)
 			res.Price = fmt.Sprintf("%.6f", price)
